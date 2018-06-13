@@ -1,4 +1,8 @@
 #!/bin/bash
+# Use this script for Ubuntu only.
+# By default this script will install 32bit Teamviewer
+# To install 64bit, Uncomment 17th line and comment 18th line.
+# Contact Email:- Navdeep.D2@gmail.com
 echo "============================================"
 echo -e "\e[1;32m REMOVING PREVIOUS TEAMVIEWER IF ANY ............ \e[0m"
 echo "============================================"
