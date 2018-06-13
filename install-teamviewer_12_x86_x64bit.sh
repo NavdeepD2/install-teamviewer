@@ -12,7 +12,7 @@ apt autoremove -y
 rm -fr /tmp/teamviewer*
 #cd /tmp/ ; wget http://download.teamviewer.com/download/version_12x/teamviewer_amd64.deb
 cd /tmp/ ; wget http://download.teamviewer.com/download/version_12x/teamviewer_i386.deb
-dpkg -i /tmp/teamviewer_i386.deb
+dpkg -i /tmp/teamviewe*
 apt-get install libgcc1 -y
 apt-get -f install -y
 dpkg -l | grep -i teamviewer
