@@ -6,20 +6,21 @@
 echo "============================================"
 echo -e "\e[1;32m REMOVING PREVIOUS TEAMVIEWER IF ANY ............ \e[0m"
 echo "============================================"
-apt-get remove teamviewer -y
-apt autoremove -y
-apt-get remove teamviewer:i386 -y
-dpkg -r teamviewer:i386
-dpkg --purge teamviewer
-dpkg --purge teamviewer:i386
-apt autoremove -y
+sudo apt-get remove teamviewer -y
+sudo apt autoremove -y
+sudo apt-get remove teamviewer:i386 -y
+sudo dpkg -r teamviewer:i386
+sudo dpkg --purge teamviewer
+sudo dpkg --purge teamviewer:i386
+sudo apt autoremove -y
 rm -fr /tmp/teamviewer*
 #cd /tmp/ ; wget http://download.teamviewer.com/download/version_12x/teamviewer_amd64.deb
 cd /tmp/ ; wget http://download.teamviewer.com/download/version_12x/teamviewer_i386.deb
-dpkg -i /tmp/teamviewe*
-apt-get install libgcc1 -y
-apt-get -f install -y
-dpkg -l | grep -i teamviewer
+sudo dpkg -i /tmp/teamviewe*
+sudo apt-get install libgcc1 -y
+sudo apt-get install libc6-i386 lib32asound2 lib32z1 ia32-libs lib32ncurses5 lib32z1
+sudo apt-get -f install -y
+sudo dpkg -l | grep -i teamviewer
 if [[ $? != 0 ]]; then
 echo "============================================"
 echo -e "\e[1;31m TEAM VIEWER 12 INSTALLATION FAILED \e[0m"
