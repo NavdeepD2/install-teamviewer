@@ -1,0 +1,34 @@
+#!/bin/bash
+# Author - Navdeep Singh - navdeep.d2@gmail.com
+# Its for Virtualmin
+# Generate password
+ppass=`openssl rand -hex 12`
+# Get site name as input
+read -p 'Enter Website Name: (without www) :- ' site_name
+echo -e "\e[1;32m Creating Virtual Host $site_name ............ \e[0m"
+virtualmin create-domain  --domain $site_name --pass $ppass --default-features > /dev/null 2>&1
+echo -e "\e[1;32m Copying additional rules.... \e[0m"
+# Copy existing Rules and replaces new names with default ones
+# /etc/nginx/sample.example.com/basic_func.conf contain below things
+# ACME challange
+# Letsencrypt SSL certs path
+# HTTP to HTTPS redirection
+# 443 port open
+cp -r /etc/nginx/sample.example.com /etc/nginx/$site_name
+sed -i -e "/fastcgi_param HTTPS/a   include /etc/nginx/$site_name/*.conf;" /etc/nginx/conf.d/$site_name.conf
+sed -i -e "s/example.com/$site_name/g" /etc/nginx/$site_name/*.conf
+uuser=`virtualmin list-domains | grep $site_name | awk '{print $2}'`
+sed -i -e "s/username/$uuser/g" /etc/nginx/$site_name/*.conf
+# Checking nginx config and reload service
+nginx -t && service nginx reload
+echo -e "\e[1;32m Installing Lets encrypt............ \e[0m"
+# Generating 
+virtualmin generate-letsencrypt-cert --domain $site_name
+touch /home/$uuser/public_html/index.php
+chown $uuser: /home/$uuser/public_html/index.php
+echo "test page - hi" >> /home/$uuser/public_html/index.php
+# Checking nginx config and reload service
+nginx -t && service nginx reload
+echo -e "\e[1;32m Virtual Host is created for $site_name, username is $uuser and password is $ppass \e[0m" > $site_name-logins.txt
+cat $site_name-logins.txt
+echo "Logins are saved in this file /root/scripts/$site_name-logins.txt"
