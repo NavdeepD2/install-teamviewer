@@ -1,0 +1,10 @@
+Move old files on daily basis with find command  to keep folder light - Linux/Unix
+
+I'm working as Linux Admin and on daily basis my work includes taking screenshots, So i put full screenshots in Pictures folder and cropped ones in Music folder.
+
+I ends up with 20 to 30 pictures daily and it takes time to load folder's files when it have massive files in it So below are the crons which keeps only past 10 days of files and rest of them it moves to zold folder inside them and /dev/null eat all the errors.
+
+
+0 3,15 * * * find Music/ -mtime +10 -exec mv {} Music/zold/ \; 2> /dev/null
+
+0 14,21 * * * find Pictures/ -mtime +10 -exec mv {} Pictures/zold/ \; 2> /dev/null
